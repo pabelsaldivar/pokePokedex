@@ -2,8 +2,7 @@
 //  PokemonViewController.swift
 //  pokePokedex
 //
-//  Created by Jonathan Pabel Saldivar Mendoza on 03/05/21.
-//
+//  Created by Pabel Saldivar on 22/07/21.
 
 import UIKit
 import Alamofire
@@ -14,7 +13,11 @@ protocol PokemonViewDelegate {
     func pokemonController(didChangefavourite pokemon: PokemonModel)
 }
 
-class PokemonViewController: UIViewController {
+final class PokemonViewController: UIViewController {
+
+    // MARK: - Public properties -
+
+    var presenter: PokemonPresenterInterface!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -139,4 +142,9 @@ class PokemonViewController: UIViewController {
             }
         }
     }
+}
+
+// MARK: - Extensions -
+
+extension PokemonViewController: PokemonViewInterface {
 }

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="f1C-RW-C1o">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -144,7 +145,7 @@
         <!--Pokemon-->
         <scene sceneID="XgN-uv-lLF">
             <objects>
-                <viewController id="ffW-e9-sY3" customClass="DashboardViewController" customModule="pokePokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DashboardViewController" id="ffW-e9-sY3" customClass="DashboardViewController" customModule="pokePokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDL-JA-SoK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -412,12 +413,13 @@
             </objects>
             <point key="canvasLocation" x="4105.7971014492759" y="820.98214285714278"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab View Controller-->
         <scene sceneID="uK2-BA-nxd">
             <objects>
-                <tabBarController storyboardIdentifier="DashboardViewControllerNav" automaticallyAdjustsScrollViewInsets="NO" id="cjE-GC-hnl" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="DashboardViewControllerNav" automaticallyAdjustsScrollViewInsets="NO" id="cjE-GC-hnl" customClass="MainTabViewController" customModule="pokePokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LL5-CZ-VeH">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -433,7 +435,7 @@
         <!--Pokemon-->
         <scene sceneID="rOV-1Z-3Qi">
             <objects>
-                <viewController id="vyc-dv-cSm" customClass="FavouritesViewController" customModule="pokePokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavouritesViewController" id="vyc-dv-cSm" customClass="FavouritesViewController" customModule="pokePokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C7N-17-lBT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

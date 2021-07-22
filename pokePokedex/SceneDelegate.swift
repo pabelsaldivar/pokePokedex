@@ -58,15 +58,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func showLoginScreen() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController")
+        let viewController = LoginWireframe().viewController
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
     }
     
     func showDashboardScreen() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "DashboardViewControllerNav")
+        let viewController = MainTabViewController()
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
     }

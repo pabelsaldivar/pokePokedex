@@ -2,14 +2,16 @@
 //  LoginViewController.swift
 //  pokePokedex
 //
-//  Created by Jonathan Pabel Saldivar Mendoza on 30/04/21.
-//
+//  Created by Pabel Saldivar on 22/07/21.
 
 import UIKit
-import FirebaseAuth
 import NVActivityIndicatorView
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
+
+    // MARK: - Public properties -
+
+    var presenter: LoginPresenterInterface!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var userNameTextField: UITextField!
@@ -17,6 +19,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var continueButton: UIButton!
     
     var activityIndicator: NVActivityIndicatorView!
+
+    // MARK: - Lifecycle -
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,32 +39,16 @@ class LoginViewController: UIViewController {
         activityIndicator.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         self.view.addSubview(activityIndicator)
     }
-    
-    func validate() -> Result<(user: String, password: String), Error> {
-        guard let user = userNameTextField.text, !user.isEmpty else {
-            return .failure(GenericError.emptyUser)
-        }
-        if !user.isEmail {
-            return .failure(GenericError.emptyUser)
-        }
-        guard let password = passwordTextField.text, !password.isEmpty else {
-            return.failure(GenericError.emptyPasword)
-        }
-        return .success((user: user, password: password))
+	
+    @IBAction func continueButtonTapped(_ sender: Any) {
+        presenter.validate(email: userNameTextField.text,
+                           password: passwordTextField.text)
     }
-    
-    func login(_ user: String, by password: String) {
-        activityIndicator.startAnimating()
-        Auth.auth().signIn(withEmail: user, password: password) { (user, error) in
-            if let error = error {
-                self.show(error)
-            } else {
-                self.performSegue(withIdentifier: "DashboardViewControllerNav", sender: nil)
-            }
-            self.activityIndicator.stopAnimating()
-        }
-    }
-    
+}
+
+// MARK: - Extensions - LoginViewInterface
+
+extension LoginViewController: LoginViewInterface {
     func show(_ error: Error) {
         let title = "Ooh oh! "
         let message = error.localizedDescription
@@ -72,17 +60,29 @@ class LoginViewController: UIViewController {
         alert.addAction(goToSettings)
         self.present(alert, animated: true)
     }
-
-    @IBAction func continueButtonTapped(_ sender: Any) {
-        switch validate() {
-        case .success(let data):
-            self.view.endEditing(true)
-            login(data.user, by: data.password)
-        case .failure(let error):
-            show(error)
+    
+    func showLoader() {
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
         }
     }
+    
+    func hideLoader() {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func login(didFinishToValidate userData: (email: String, password: String)) {
+        presenter.login(user: userData.email, by: userData.password)
+    }
+    
+    func login(didFinishToLogin userToken: String) {
+        presenter.navigate(to: .Dashboard)
+    }   
 }
+
+// MARK: - Extensions - Keyboard
 
 extension LoginViewController {
     private func registerKeyBoardNotifications() {
@@ -112,6 +112,8 @@ extension LoginViewController {
         scrollView.scrollIndicatorInsets = insets
     }
 }
+
+// MARK: - Extensions - UITextFieldDelegate
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
